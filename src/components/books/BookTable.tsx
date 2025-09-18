@@ -1,6 +1,8 @@
 import React from "react";
 import { Book, useDeleteBookMutation } from "../../store/api/libraryApi";
 import LoadingSpinner from "../common/LoadingSpinner";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 interface BookTableProps {
   books: Book[];
@@ -20,12 +22,24 @@ const BookTable: React.FC<BookTableProps> = ({
   const [deleteBook, { isLoading: isDeleting }] = useDeleteBookMutation();
 
   const handleDelete = async (book: Book) => {
-    if (window.confirm(`Are you sure you want to delete "${book.title}"?`)) {
+    const result = await Swal.fire({
+      title: `Delete \"${book.title}\"?`,
+      text: "This action cannot be undone.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it",
+    });
+
+    if (result.isConfirmed) {
       try {
         await deleteBook(book._id!).unwrap();
-      } catch (error) {
-        console.error("Failed to delete book:", error);
-        alert("Failed to delete book. Please try again.");
+        toast.success("Book deleted");
+      } catch (error: any) {
+        const msg =
+          error?.data?.error || error?.data?.message || "Failed to delete book";
+        toast.error(msg);
       }
     }
   };

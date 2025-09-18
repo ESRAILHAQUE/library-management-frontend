@@ -47,9 +47,7 @@ const BookForm: React.FC<BookFormProps> = ({
     if (!formData.genre?.trim()) {
       newErrors.genre = "Genre is required";
     }
-    if (!formData.isbn?.trim()) {
-      newErrors.isbn = "ISBN is required";
-    }
+    // Removed ISBN validation per request
     if (formData.copies === undefined || formData.copies < 0) {
       newErrors.copies = "Copies must be a positive number";
     }
@@ -62,7 +60,7 @@ const BookForm: React.FC<BookFormProps> = ({
     e.preventDefault();
 
     if (validateForm()) {
-      onSubmit(formData);
+      onSubmit({ ...formData, isbn: formData.isbn?.trim() });
     }
   };
 
@@ -181,7 +179,7 @@ const BookForm: React.FC<BookFormProps> = ({
             <label
               htmlFor="isbn"
               className="block text-sm font-medium text-gray-700 mb-2">
-              ISBN *
+              ISBN
             </label>
             <input
               type="text"
@@ -189,14 +187,9 @@ const BookForm: React.FC<BookFormProps> = ({
               name="isbn"
               value={formData.isbn || ""}
               onChange={handleChange}
-              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
-                errors.isbn ? "border-red-500" : "border-gray-300"
-              }`}
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 border-gray-300"
               placeholder="Enter ISBN number"
             />
-            {errors.isbn && (
-              <p className="mt-1 text-sm text-red-600">{errors.isbn}</p>
-            )}
           </div>
 
           {/* Copies */}

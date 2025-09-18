@@ -6,6 +6,7 @@ import {
 } from "../store/api/libraryApi";
 import BookForm from "../components/books/BookForm";
 import LoadingSpinner from "../components/common/LoadingSpinner";
+import toast from "react-hot-toast";
 
 const EditBook: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,9 +17,12 @@ const EditBook: React.FC = () => {
   const handleSubmit = async (bookData: any) => {
     try {
       await updateBook({ id: id!, updates: bookData }).unwrap();
+      toast.success("Book updated successfully");
       navigate("/books");
-    } catch (error) {
-      console.error("Failed to update book:", error);
+    } catch (error: any) {
+      const msg =
+        error?.data?.error || error?.data?.message || "Failed to update book";
+      toast.error(msg);
     }
   };
 

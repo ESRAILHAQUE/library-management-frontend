@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useGetBooksQuery } from "../store/api/libraryApi";
+import { useGetBooksPaginatedQuery } from "../store/api/libraryApi";
 import BookTable from "../components/books/BookTable";
 
 const BookList: React.FC = () => {
   const navigate = useNavigate();
-  const { data: books = [], isLoading, error } = useGetBooksQuery();
+  const [page, setPage] = useState(1);
+  const limit = 10;
+  const { data, isLoading, error } = useGetBooksPaginatedQuery({ page, limit });
+  const books = data?.items ?? [];
 
   const handleEdit = (book: any) => {
     navigate(`/edit-book/${book._id}`);
@@ -39,6 +42,29 @@ const BookList: React.FC = () => {
         onEdit={handleEdit}
         onBorrow={handleBorrow}
       />
+
+      <div className="flex items-center justify-between mt-6">
+        <div className="text-sm text-gray-600">
+          Page {data?.page ?? 1} of {data?.pages ?? 1} • Total:{" "}
+          {data?.total ?? 0}
+        </div>
+        <div className="space-x-2">
+          <button
+            className="px-3 py-1 border rounded disabled:opacity-50"
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={isLoading || (data?.page ?? 1) <= 1}>
+            Previous
+          </button>
+          <button
+            className="px-3 py-1 border rounded disabled:opacity-50"
+            onClick={() =>
+              setPage((p) => (data?.pages && p < data.pages ? p + 1 : p))
+            }
+            disabled={isLoading || !data || data.page >= (data.pages || 1)}>
+            Next
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

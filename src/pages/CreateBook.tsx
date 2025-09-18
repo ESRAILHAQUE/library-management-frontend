@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useCreateBookMutation } from "../store/api/libraryApi";
 import BookForm from "../components/books/BookForm";
+import toast from "react-hot-toast";
 
 const CreateBook: React.FC = () => {
   const navigate = useNavigate();
@@ -10,9 +11,12 @@ const CreateBook: React.FC = () => {
   const handleSubmit = async (bookData: any) => {
     try {
       await createBook(bookData).unwrap();
+      toast.success("Book created successfully");
       navigate("/books");
-    } catch (error) {
-      console.error("Failed to create book:", error);
+    } catch (error: any) {
+      const msg =
+        error?.data?.error || error?.data?.message || "Failed to create book";
+      toast.error(msg);
     }
   };
 

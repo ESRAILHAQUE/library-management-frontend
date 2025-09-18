@@ -9,6 +9,7 @@ import BookDetails from "./pages/BookDetails";
 import EditBook from "./pages/EditBook";
 import BorrowBook from "./pages/BorrowBook";
 import BorrowSummary from "./pages/BorrowSummary";
+import BorrowList from "./pages/BorrowList";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/edit-book/:id" element={<EditBook />} />
             <Route path="/borrow/:bookId" element={<BorrowBook />} />
             <Route path="/borrow-summary" element={<BorrowSummary />} />
+            <Route path="/borrows" element={<BorrowList />} />
           </Routes>
         </main>
         <Footer />

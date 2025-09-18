@@ -23,7 +23,7 @@ const BookTable: React.FC<BookTableProps> = ({
 
   const handleDelete = async (book: Book) => {
     const result = await Swal.fire({
-      title: `Delete \"${book.title}\"?`,
+      title: `Delete "${book.title}"?`,
       text: "This action cannot be undone.",
       icon: "warning",
       showCancelButton: true,

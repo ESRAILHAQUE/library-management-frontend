@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { mockBooks } from "../../data/mockBooks";
 
 export interface Book {
   _id?: string;

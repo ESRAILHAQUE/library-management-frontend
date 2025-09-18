@@ -44,7 +44,9 @@ const Footer: React.FC = () => {
             </p>
             <div className="flex space-x-4">
               <a
-                href="#"
+                href="https://facebook.com"
+                target="_blank"
+                rel="noreferrer"
                 className="text-gray-400 hover:text-indigo-400 transition-colors duration-200">
                 <span className="sr-only">Facebook</span>
                 <svg
@@ -59,7 +61,9 @@ const Footer: React.FC = () => {
                 </svg>
               </a>
               <a
-                href="#"
+                href="https://twitter.com"
+                target="_blank"
+                rel="noreferrer"
                 className="text-gray-400 hover:text-indigo-400 transition-colors duration-200">
                 <span className="sr-only">Twitter</span>
                 <svg
@@ -70,7 +74,9 @@ const Footer: React.FC = () => {
                 </svg>
               </a>
               <a
-                href="#"
+                href="https://github.com"
+                target="_blank"
+                rel="noreferrer"
                 className="text-gray-400 hover:text-indigo-400 transition-colors duration-200">
                 <span className="sr-only">GitHub</span>
                 <svg
